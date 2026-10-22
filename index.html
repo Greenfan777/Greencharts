@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0b1018">
+  <title>Greencharts — Preflop Chart Library</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#top" aria-label="Greencharts, начало"><span class="brand-mark">G<span>♠</span></span><span><b>GREENCHARTS</b><small>PREFLOP LIBRARY</small></span></a>
+    <div class="topbar-right"><span class="status-dot"></span><span>Библиотека диапазонов</span></div>
+  </header>
+  <main id="top">
+    <section class="hero">
+      <div><div class="eyebrow">POKERNOTES · NL HOLD’EM CASH</div><h1>Preflop <span>Chart Library</span></h1><p>Выбери ситуацию за столом, чтобы открыть соответствующий диапазон. Реальные диапазоны появятся здесь после добавления данных.</p></div>
+      <div class="hero-art" aria-hidden="true"><div class="playing-card card-back">A<small>♠</small></div><div class="playing-card card-front">K<small>♦</small></div></div>
+    </section>
+    <section class="situation-picker" aria-label="Выбор ситуации">
+      <div class="group-heading"><span class="group-dot red"></span><h2>RFI — первый рейз</h2><span class="group-note">Все до тебя сбросили</span></div>
+      <div id="rfiButtons" class="button-grid rfi-grid"></div>
+      <div class="group-heading"><span class="group-dot blue"></span><h2>Vs Open — защита против рейза</h2><span class="group-note">Колл / 3-бет / фолд — по диапазону</span></div>
+      <div id="vsButtons" class="button-grid"></div>
+      <div class="group-heading"><span class="group-dot green"></span><h2>Blind Defense — игра на блайндах</h2></div>
+      <div id="blindButtons" class="button-grid"></div>
+      <div class="group-heading"><span class="group-dot orange"></span><h2>3-Bet — наш 3-бет</h2></div>
+      <div id="threeBetButtons" class="button-grid"></div>
+    </section>
+    <section class="chart-layout" id="chartArea">
+      <div class="chart-card">
+        <div class="chart-card-header"><div><div class="eyebrow">ВЫБРАННАЯ СИТУАЦИЯ</div><h2 id="selectedTitle">RFI - UTG</h2><p id="selectedSubtitle">Первый рейз из ранней позиции</p></div><span id="chartStatus" class="status-pill">Диапазон не загружен</span></div>
+        <div class="legend"><span><i class="legend-swatch raise"></i> Raise</span><span><i class="legend-swatch call"></i> Call</span><span><i class="legend-swatch fold"></i> Fold</span><span><i class="legend-swatch empty"></i> Нет данных</span></div>
+        <div class="matrix-wrap"><div id="handMatrix" class="hand-matrix" role="grid" aria-label="Матрица стартовых рук"></div></div>
+        <div id="emptyNote" class="empty-note"><span>ⓘ</span><div><b>Для этой ситуации пока нет диапазона</b><p>Матрица не заполнена выдуманными данными. После добавления диапазона ячейки будут отмечаться как Raise, Call или Fold.</p></div></div>
+      </div>
+      <aside class="info-card"><div class="eyebrow">КАРТОЧКА СИТУАЦИИ</div><div id="positionBadge" class="position-badge">UTG</div><h3 id="infoTitle">RFI - UTG</h3><p id="infoCopy">Открывающий рейз, когда все игроки до героя сбросили карты.</p><div class="info-rows"><div><span>Категория</span><b id="infoCategory">RFI</b></div><div><span>Hero</span><b id="infoHero">UTG</b></div><div><span>Villain / ситуация</span><b id="infoVillain">—</b></div><div><span>Статус данных</span><b id="infoData">Не загружены</b></div></div><div class="engine-note"><b>Для PokerNotes</b><p>У каждой ситуации есть постоянный ID. Его можно использовать для будущей проверки решений в HM3-анализаторе.</p><code id="situationId">rfi_utg</code></div></aside>
+    </section>
+    <section class="catalog"><div class="catalog-heading"><div><div class="eyebrow">БЫСТРАЯ НАВИГАЦИЯ</div><h2>Все ситуации</h2></div><label class="searchbox"><span>⌕</span><input id="searchInput" type="search" placeholder="Поиск по позиции или ID…" autocomplete="off"></label></div><div class="catalog-list" id="catalogList"></div><p id="noResults" class="no-results" hidden>Ничего не найдено.</p></section>
+    <footer><span>GREENCHARTS</span><span>Публичный просмотр · Диапазоны не подставляются автоматически</span></footer>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
