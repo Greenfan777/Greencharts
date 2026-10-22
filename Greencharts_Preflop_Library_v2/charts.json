@@ -1,0 +1,12 @@
+{
+  "_instructions": "Добавляйте для ID ситуации объект с руками и действиями R (Raise), C (Call), F (Fold). Пример: \"rfi_utg\": {\"AA\": \"R\", \"AKs\": \"R\", \"72o\": \"F\"}. Оставьте объект пустым, если реального диапазона пока нет.",
+  "rfi_utg": {}, "rfi_hj": {}, "rfi_co": {}, "rfi_btn": {}, "rfi_sb": {},
+  "vs_hj_utg": {}, "vs_co_utg": {}, "vs_btn_utg": {}, "vs_sb_utg": {}, "vs_bb_utg": {},
+  "vs_co_hj": {}, "vs_btn_hj": {}, "vs_sb_hj": {}, "vs_bb_hj": {},
+  "vs_btn_co": {}, "vs_sb_co": {}, "vs_bb_co": {},
+  "blind_sb_btn": {}, "blind_bb_btn": {}, "blind_bb_sb": {},
+  "3bet_utg_hj": {}, "3bet_utg_co": {}, "3bet_utg_btn": {}, "3bet_utg_sb": {}, "3bet_utg_bb": {},
+  "3bet_hj_co": {}, "3bet_hj_btn": {}, "3bet_hj_sb": {}, "3bet_hj_bb": {},
+  "3bet_co_btn": {}, "3bet_co_sb": {}, "3bet_co_bb": {},
+  "3bet_btn_sb": {}, "3bet_btn_bb": {}, "3bet_sb_bb": {}
+}
