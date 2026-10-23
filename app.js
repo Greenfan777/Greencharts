@@ -24,7 +24,44 @@ function renderButtons(){for(const [id,items] of [["rfiButtons",rfi],["vsButtons
 function handAt(row,col){if(row===col)return ranks[row]+ranks[col];if(row<col)return ranks[row]+ranks[col]+"s";return ranks[col]+ranks[row]+"o";}
 function makeHands(){const fragment=document.createDocumentFragment();const data=charts[selected.id]||{};for(let r=0;r<13;r++){for(let c=0;c<13;c++){const hand=handAt(r,c);const action=data[hand]||"F";const cls=action==="R"?"raise":action==="C"?"call":"fold";const cell=document.createElement("div");cell.className=`hand-cell ${cls}`;cell.textContent=hand;cell.title=hand;cell.setAttribute("role","gridcell");cell.setAttribute("aria-label",hand);fragment.appendChild(cell);}}$("handMatrix").replaceChildren(fragment);fitMatrixToViewport();}
 function shuffled(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
-function nextPhrase(id){if(!humorEnabled)return;const source=(window.greenchartsPhrases||{})[id];if(!source||!source.length){$("humorText").textContent="";return;}if(!phraseBags[id]||phraseBags[id].length===0){phraseBags[id]=shuffled(source);if(phraseBags[id].length>1&&phraseBags[id][phraseBags[id].length-1]===lastPhrase[id]){const n=phraseBags[id].length;[phraseBags[id][n-1],phraseBags[id][n-2]]=[phraseBags[id][n-2],phraseBags[id][n-1]];}}const phrase=phraseBags[id].pop();lastPhrase[id]=phrase;$("humorText").textContent=phrase;}
+let generalPhraseBag=[];
+let lastGeneralPhrase="";
+function drawGeneralPhrase(){
+  const source=window.greenchartsGeneralPhrases||[];
+  if(!source.length)return "";
+  if(!generalPhraseBag.length){
+    generalPhraseBag=shuffled(source);
+    if(generalPhraseBag.length>1&&generalPhraseBag[generalPhraseBag.length-1]===lastGeneralPhrase){
+      const n=generalPhraseBag.length;
+      [generalPhraseBag[n-1],generalPhraseBag[n-2]]=[generalPhraseBag[n-2],generalPhraseBag[n-1]];
+    }
+  }
+  const phrase=generalPhraseBag.pop();
+  lastGeneralPhrase=phrase;
+  return phrase;
+}
+function drawSituationPhrase(id){
+  const source=(window.greenchartsPhrases||{})[id];
+  if(!source||!source.length)return "";
+  if(!phraseBags[id]||phraseBags[id].length===0){
+    phraseBags[id]=shuffled(source);
+    if(phraseBags[id].length>1&&phraseBags[id][phraseBags[id].length-1]===lastPhrase[id]){
+      const n=phraseBags[id].length;
+      [phraseBags[id][n-1],phraseBags[id][n-2]]=[phraseBags[id][n-2],phraseBags[id][n-1]];
+    }
+  }
+  const phrase=phraseBags[id].pop();
+  lastPhrase[id]=phrase;
+  return phrase;
+}
+function nextPhrase(id){
+  if(!humorEnabled)return;
+  const general=window.greenchartsGeneralPhrases||[];
+  const specific=(window.greenchartsPhrases||{})[id]||[];
+  // The general meme pool is independent of the selected poker situation.
+  const phrase=(general.length&&(!specific.length||Math.random()<0.65))?drawGeneralPhrase():drawSituationPhrase(id);
+  $("humorText").textContent=phrase||"";
+}
 function selectSituation(s){selected=s;document.querySelectorAll(".situation-button").forEach(b=>{const active=b.dataset.id===s.id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});$("selectedTitle").textContent=s.label;makeHands();if(humorEnabled)nextPhrase(s.id);else $("humorText").textContent="";}
 function fitMatrixToViewport(){
   const layout=$("chartLayout"), matrix=$("handMatrix"), wrap=$("matrixWrap");
