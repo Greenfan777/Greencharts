@@ -11,7 +11,7 @@ const groups = {
     ["vs_hj_utg","HJ vs UTG R","HJ","UTG"],["vs_co_utg","CO vs UTG R","CO","UTG"],["vs_btn_utg","BTN vs UTG R","BTN","UTG"],["vs_sb_utg","SB vs UTG R","SB","UTG"],["vs_bb_utg","BB vs UTG R","BB","UTG"],
     ["vs_co_hj","CO vs HJ R","CO","HJ"],["vs_btn_hj","BTN vs HJ R","BTN","HJ"],["vs_sb_hj","SB vs HJ R","SB","HJ"],["vs_bb_hj","BB vs HJ R","BB","HJ"],
     ["vs_btn_co","BTN vs CO R","BTN","CO"],["vs_sb_co","SB vs CO R","SB","CO"],["vs_bb_co","BB vs CO R","BB","CO"]
-  ].map(([id,label,hero,villain])=>({id,label,hero,villain,category:"Vs Open",type:"vs",subtitle:`Защита ${hero} против открытия ${villain}`,copy:`Решение ${hero} против рейза из ${villain}: использовать реальные данные диапазона после загрузки.`})),
+  ].map(([id,label,hero,villain])=>({id,label,hero,villain,category:"Vs Open",type:"vs",subtitle:`Защита ${hero} против открытия ${villain}`,copy:`Базовый диапазон защиты ${hero} против открытия из ${villain}.`})),
   blind: [
     {id:"blind_sb_btn",label:"SB vs BTN R",hero:"SB",villain:"BTN",category:"Blind Defense",type:"blind",subtitle:"Малый блайнд против открытия BTN",copy:"Защита SB против открытия с баттона."},
     {id:"blind_bb_btn",label:"BB vs BTN R",hero:"BB",villain:"BTN",category:"Blind Defense",type:"blind",subtitle:"Большой блайнд против открытия BTN",copy:"Защита BB против открытия с баттона."},
@@ -22,9 +22,9 @@ const groups = {
     ["3bet_hj_co","HJ vs CO 3bet","HJ","CO"],["3bet_hj_btn","HJ vs BTN 3bet","HJ","BTN"],["3bet_hj_sb","HJ vs SB 3bet","HJ","SB"],["3bet_hj_bb","HJ vs BB 3bet","HJ","BB"],
     ["3bet_co_btn","CO vs BTN 3bet","CO","BTN"],["3bet_co_sb","CO vs SB 3bet","CO","SB"],["3bet_co_bb","CO vs BB 3bet","CO","BB"],
     ["3bet_btn_sb","BTN vs SB 3bet","BTN","SB"],["3bet_btn_bb","BTN vs BB 3bet","BTN","BB"],["3bet_sb_bb","SB vs BB 3bet","SB","BB"]
-  ].map(([id,label,hero,villain])=>({id,label,hero,villain,category:"3-Bet",type:"threebet",subtitle:`3-бет ${hero} против открытия ${villain}`,copy:`Диапазон 3-бета ${hero} против рейза ${villain}; реальные действия появятся после загрузки данных.`}))
+  ].map(([id,label,hero,villain])=>({id,label,hero,villain,category:"3-Bet",type:"threebet",subtitle:`3-бет ${hero} против открытия ${villain}`,copy:`Базовый диапазон ${hero} после 3-бета со стороны ${villain}: колл, 4-бет или фолд.`}))
 };
-// Матрица намеренно пустая: сюда должны быть добавлены реальные диапазоны, без выдуманных частот.
+// В charts.json содержится Preflop Baseline v1, развёрнутый в 169 категорий рук для каждой ситуации.
 let charts = {};
 let all = [...groups.rfi,...groups.vs,...groups.blind,...groups.threebet];
 let selected = all[0];

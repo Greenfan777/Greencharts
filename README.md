@@ -1,24 +1,15 @@
 # Greencharts — Preflop Chart Library
 
-Static site for GitHub Pages. No dependencies or build step are required.
+Публичная библиотека префлоп-диапазонов на GitHub Pages.
 
-## Publish on GitHub Pages
-1. Upload `index.html`, `style.css`, `app.js`, and `charts.json` to the root of `Zeezoo777/Greencharts`.
-2. Open the repository's **Settings → Pages**.
-3. Under **Build and deployment**, choose **Deploy from a branch**, branch `main`, folder `/ (root)`, then Save.
-4. When GitHub Pages finishes publishing, it will show the public site URL in that same section.
+## Что включено
+- 35 ситуаций: RFI, защита против открытия и решения против 3-бета.
+- Матрица 13×13: 169 категорий стартовых рук на каждую ситуацию.
+- Действия показываются цветом: Raise (красный), Call (зелёный), Fold (тёмный).
+- Диапазоны загружены из сохранённого пользователем `Preflop_Baseline_v1.csv`. Обозначения диапазонов развёрнуты в конкретные категории рук; проценты и смешанные частоты не придумываются.
 
-## Range data
-The interface intentionally does not invent ranges. `charts.json` contains all situation IDs with empty data. To provide a chart, add action entries under its ID, using `R` for Raise, `C` for Call, and `F` for Fold. Hands use standard notation: `AA`, `AKs`, `AKo`.
+## Публикация
+GitHub Pages: Settings → Pages → Deploy from a branch → `main` → `/(root)`.
 
-Example:
-```json
-"rfi_utg": {
-  "AA": "R",
-  "AKs": "R",
-  "AKo": "R",
-  "72o": "F"
-}
-```
-
-**Current limitation:** this is a public, static viewer, not a secure in-site admin panel. `charts.json` is edited through GitHub by repository collaborators with write permission, then the site redeploys. Do not put passwords or secrets in static front-end files. An authenticated editor with shared database storage requires a backend service to be connected and configured.
+## Примечание
+Это категориальные базовые диапазоны, а не частотная GTO-стратегия. Для добавления защищённого редактирования с единой базой понадобится отдельная аутентификация и backend; текущая версия предназначена для публичного просмотра.
