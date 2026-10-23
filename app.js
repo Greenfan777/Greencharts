@@ -56,7 +56,7 @@ function drawSituationPhrase(id){
 }
 function plainPhrase(value){
   // Strip quote glyphs at render time too, so cached/older phrase data cannot show them.
-  return String(value||"").replace(/[\"«»“”„‟‘’‹›❝❞〝〞＂＇]/g, "").replace(/\s{2,}/g, " ").trim();
+  return String(value||"").replace(/[\"«»“”„‟‹›❝❞〝〞＂＇]/g, "").replace(/\s{2,}/g, " ").trim();
 }
 function nextPhrase(id){
   if(!humorEnabled)return;
