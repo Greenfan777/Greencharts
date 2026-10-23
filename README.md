@@ -1,15 +1,10 @@
-# Greencharts — Preflop Chart Library
+# Greencharts
 
-Публичная библиотека префлоп-диапазонов на GitHub Pages.
+Minimal dark preflop range selector matching the supplied reference screenshot.
 
-## Что включено
-- 35 ситуаций: RFI, защита против открытия и решения против 3-бета.
-- Матрица 13×13: 169 категорий стартовых рук на каждую ситуацию.
-- Действия показываются цветом: Raise (красный), Call (зелёный), Fold (тёмный).
-- Диапазоны загружены из сохранённого пользователем `Preflop_Baseline_v1.csv`. Обозначения диапазонов развёрнуты в конкретные категории рук; проценты и смешанные частоты не придумываются.
+- 35 situations arranged in 5-column rows.
+- 13x13 hand matrix populated from `Preflop_Baseline_v1.csv` converted to `charts.json`.
+- Red = raise/3-bet/4-bet; green = call; dark = fold.
+- No percentages or extra description panels.
 
-## Публикация
-GitHub Pages: Settings → Pages → Deploy from a branch → `main` → `/(root)`.
-
-## Примечание
-Это категориальные базовые диапазоны, а не частотная GTO-стратегия. Для добавления защищённого редактирования с единой базой понадобится отдельная аутентификация и backend; текущая версия предназначена для публичного просмотра.
+Publish the contents of this folder to the root of the GitHub Pages `main` branch.
