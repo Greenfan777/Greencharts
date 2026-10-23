@@ -54,13 +54,17 @@ function drawSituationPhrase(id){
   lastPhrase[id]=phrase;
   return phrase;
 }
+function plainPhrase(value){
+  // Strip quote glyphs at render time too, so cached/older phrase data cannot show them.
+  return String(value||"").replace(/[\"«»“”„‟‘’‹›❝❞〝〞＂＇]/g, "").replace(/\s{2,}/g, " ").trim();
+}
 function nextPhrase(id){
   if(!humorEnabled)return;
   const general=window.greenchartsGeneralPhrases||[];
   const specific=(window.greenchartsPhrases||{})[id]||[];
   // The general meme pool is independent of the selected poker situation.
   const phrase=(general.length&&(!specific.length||Math.random()<0.65))?drawGeneralPhrase():drawSituationPhrase(id);
-  $("humorText").textContent=phrase||"";
+  $("humorText").textContent=plainPhrase(phrase||"");
 }
 function selectSituation(s){selected=s;document.querySelectorAll(".situation-button").forEach(b=>{const active=b.dataset.id===s.id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});$("selectedTitle").textContent=s.label;makeHands();if(humorEnabled)nextPhrase(s.id);else $("humorText").textContent="";}
 function fitMatrixToViewport(){
