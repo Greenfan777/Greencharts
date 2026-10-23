@@ -16,10 +16,39 @@ const all=[...rfi,...vs,...threebet];
 const $=id=>document.getElementById(id);
 let charts={};
 let selected=all.find(s=>s.id==="3bet_utg_sb")||all[0];
+let humorEnabled=true;
+const phraseBags={};
+const lastPhrase={};
 function makeButton(s){const b=document.createElement("button");b.type="button";b.className=`situation-button ${s.type}`;b.textContent=s.label;b.dataset.id=s.id;b.title=s.label;b.setAttribute("aria-pressed","false");b.addEventListener("click",()=>selectSituation(s));return b;}
 function renderButtons(){for(const [id,items] of [["rfiButtons",rfi],["vsButtons",vs],["threeBetButtons",threebet]])$(id).replaceChildren(...items.map(makeButton));}
 function handAt(row,col){if(row===col)return ranks[row]+ranks[col];if(row<col)return ranks[row]+ranks[col]+"s";return ranks[col]+ranks[row]+"o";}
-function makeHands(){const fragment=document.createDocumentFragment();const data=charts[selected.id]||{};for(let r=0;r<13;r++){for(let c=0;c<13;c++){const hand=handAt(r,c);const action=data[hand]||"F";const cls=action==="R"?"raise":action==="C"?"call":"fold";const cell=document.createElement("div");cell.className=`hand-cell ${cls}`;cell.textContent=hand;cell.title=hand;cell.setAttribute("role","gridcell");cell.setAttribute("aria-label",hand);fragment.appendChild(cell);}}$("handMatrix").replaceChildren(fragment);}
-function selectSituation(s){selected=s;document.querySelectorAll(".situation-button").forEach(b=>{const active=b.dataset.id===s.id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});$("selectedTitle").textContent=s.label;makeHands();}
-async function loadChartData(){try{const r=await fetch("charts.json");if(!r.ok)throw new Error("No charts");const d=await r.json();charts=d;}catch(e){charts={};}selectSituation(selected);}
-renderButtons();selectSituation(selected);loadChartData();
+function makeHands(){const fragment=document.createDocumentFragment();const data=charts[selected.id]||{};for(let r=0;r<13;r++){for(let c=0;c<13;c++){const hand=handAt(r,c);const action=data[hand]||"F";const cls=action==="R"?"raise":action==="C"?"call":"fold";const cell=document.createElement("div");cell.className=`hand-cell ${cls}`;cell.textContent=hand;cell.title=hand;cell.setAttribute("role","gridcell");cell.setAttribute("aria-label",hand);fragment.appendChild(cell);}}$("handMatrix").replaceChildren(fragment);fitMatrixToViewport();}
+function shuffled(items){const a=[...items];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function nextPhrase(id){if(!humorEnabled)return;const source=(window.greenchartsPhrases||{})[id];if(!source||!source.length){$("humorText").textContent="";return;}if(!phraseBags[id]||phraseBags[id].length===0){phraseBags[id]=shuffled(source);if(phraseBags[id].length>1&&phraseBags[id][phraseBags[id].length-1]===lastPhrase[id]){const n=phraseBags[id].length;[phraseBags[id][n-1],phraseBags[id][n-2]]=[phraseBags[id][n-2],phraseBags[id][n-1]];}}const phrase=phraseBags[id].pop();lastPhrase[id]=phrase;$("humorText").textContent=phrase;}
+function selectSituation(s){selected=s;document.querySelectorAll(".situation-button").forEach(b=>{const active=b.dataset.id===s.id;b.classList.toggle("active",active);b.setAttribute("aria-pressed",String(active));});$("selectedTitle").textContent=s.label;makeHands();if(humorEnabled)nextPhrase(s.id);else $("humorText").textContent="";}
+function fitMatrixToViewport(){
+  const layout=$("chartLayout"), matrix=$("handMatrix"), wrap=$("matrixWrap");
+  if(!layout||!matrix||!wrap)return;
+  // Start at natural responsive width. Do not shrink unless the square grid would extend below the viewport.
+  layout.classList.remove("compact-matrix");
+  layout.style.removeProperty("--matrix-size");
+  matrix.style.width="100%";
+  matrix.style.maxWidth="100%";
+  const naturalWidth=matrix.getBoundingClientRect().width;
+  const top=matrix.getBoundingClientRect().top;
+  const availableHeight=Math.max(110,Math.floor(window.innerHeight-top-10));
+  const naturalHeight=matrix.getBoundingClientRect().height;
+  if(naturalHeight>availableHeight){
+    const size=Math.max(110,Math.min(naturalWidth,availableHeight));
+    layout.style.setProperty("--matrix-size",`${size}px`);
+    layout.classList.add("compact-matrix");
+    matrix.style.width=`${size}px`;
+    matrix.style.maxWidth=`${size}px`;
+  }
+}
+function setHumorEnabled(enabled){humorEnabled=enabled;const b=$("humorToggle");b.setAttribute("aria-pressed",String(enabled));b.textContent=enabled?"ВКЛ":"ВЫКЛ";if(enabled){nextPhrase(selected.id);}else{$("humorText").textContent="";}}
+$("humorToggle").addEventListener("click",()=>setHumorEnabled(!humorEnabled));
+function loadChartData(){charts=window.greenchartsData||{};selectSituation(selected);}
+renderButtons();charts=window.greenchartsData||{};selectSituation(selected);
+window.addEventListener("resize",fitMatrixToViewport);
+window.addEventListener("orientationchange",()=>setTimeout(fitMatrixToViewport,60));

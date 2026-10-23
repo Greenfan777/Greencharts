@@ -14,18 +14,26 @@
       <div id="vsButtons" class="button-grid"></div>
       <div id="threeBetButtons" class="button-grid"></div>
     </section>
-    <section class="chart-layout" aria-label="Диапазон выбранной ситуации">
-      <div class="matrix-wrap">
+    <section id="chartLayout" class="chart-layout" aria-label="Диапазон выбранной ситуации">
+      <div id="matrixWrap" class="matrix-wrap">
         <div id="handMatrix" class="hand-matrix" role="grid" aria-label="Матрица стартовых рук"></div>
       </div>
-      <aside class="legend" aria-live="polite">
+      <aside class="side-panel" aria-live="polite">
         <div id="selectedTitle" class="selected-title">UTG VS SB 3BET</div>
-        <div class="legend-item"><span class="swatch raise"></span><span>Raise</span></div>
-        <div class="legend-item"><span class="swatch call"></span><span>Call</span></div>
-        <div class="legend-item"><span class="swatch fold"></span><span>Fold</span></div>
+        <div class="legend">
+          <div class="legend-item"><span class="swatch raise"></span><span>Raise</span></div>
+          <div class="legend-item"><span class="swatch call"></span><span>Call</span></div>
+          <div class="legend-item"><span class="swatch fold"></span><span>Fold</span></div>
+        </div>
+        <section class="banter-area" aria-label="Случайная покерная фраза">
+          <button id="humorToggle" class="humor-toggle" type="button" aria-pressed="true">ВКЛ</button>
+          <div id="humorText" class="humor-text" aria-live="polite"></div>
+        </section>
       </aside>
     </section>
   </main>
+  <script src="charts.js"></script>
+  <script src="phrases.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
